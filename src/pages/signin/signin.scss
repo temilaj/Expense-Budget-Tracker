@@ -1,33 +1,41 @@
 page-signin {
     .invalid {
         border-bottom: 1px solid #FF6153;
-      }
-      .background{
+    }
+    .background{
+    // background: #00BFA5;
+            // background: #002A4D;
+            background: #172F39;
+    }
+    #divHeading ion-icon {
+        color: #285264;
+        font-size: 125px;
+    }
+    .background{
         // background: #00BFA5;
-             // background: #002A4D;
-             background: #172F39;
-       }
-       #divHeading ion-icon {
-          color: #285264;
-              font-size: 125px;}
-              .background{
-                  // background: #00BFA5;
-                 // background: #002A4D;
-                 background: #172F39;
-           }
-           .scroll-content{
-               align-content: center;
-               display: flex;
-               flex-direction: column;
-               justify-content: center;
-               text-align: center;
-           }
-           p {
-               color:#fff;
-           }
-           a{
-               color:#fff;
-           }
+        // background: #002A4D;
+        background: #172F39;
+    }
+    .bg--transparent{
+        background-color: rgba(0,0,0,0);
+    }
+    .scroll-content{
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    p {
+        color:#fff;
+    }
+    a{
+        color:#fff;
+    }
+    ion-input.ng-dirty {
+        color: #fff;
+    }
+    
         //    .text-input ::-moz-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         //        color: #fff
         //        //opacity: 1; /* Firefox */
@@ -41,6 +49,6 @@ page-signin {
         //        //opacity: 1; /* Firefox */
         //    }
            
-      }
+}
       
 
