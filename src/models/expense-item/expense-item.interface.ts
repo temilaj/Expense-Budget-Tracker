@@ -1,8 +1,8 @@
 export interface ExpenseItem{
    userId:string;
-   expenseName: string;
-   expenseAmount: number;
-   expenseDate: string;
-   expenseCategory: string;
-   expenseNotes: string;
+   name: string;
+   amount: number;
+   Date: Date;
+   category: string;
+   notes: string;
 }
