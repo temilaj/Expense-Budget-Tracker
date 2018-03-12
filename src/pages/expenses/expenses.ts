@@ -44,19 +44,17 @@ export class ExpensesPage {
   }
 
   addExpenseItem(expenseItem:ExpenseItem) {
-    expenseItem.userId=this.userId;
-    console.log(this.expenseItem);
-    this.expenseProvider.addExpenseItem(expenseItem);
-    // this.expense.addExpenseItem(expenseItem)
-    //   //.then(()=> this.navCtrl.pop())
-  //     // this.expenseItem = {} as ExpenseItem;
-    let alert = this.alertCtrl.create({
-      title: 'Expense Added!',
-      buttons: ['OK']
+    expenseItem.userId = this.userId;
+    console.log(expenseItem);
+    this.expenseProvider.addExpenseItem(expenseItem).then(() => {
+      let alert = this.alertCtrl.create({
+        title: 'Expense Added!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }).then(() => {
+      this.navCtrl.push(ExpenseListPage);
     });
-    alert.present();
-    this.navCtrl.pop();
-    this.navCtrl.push(ExpenseListPage);
   }
           
 }
