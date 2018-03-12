@@ -1,25 +1,37 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, List } from 'ionic-angular'; 
+import { IonicPage, NavController } from 'ionic-angular'; 
 import { IncomePage } from '../income/income';
 import { ExpenseItem } from '../../models/expense-item/expense-item.interface';
 import { NgModel } from '@angular/forms';
 import { AlertController } from 'ionic-angular';
-import{AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import{ AngularFireList } from 'angularfire2/database';
 import{AngularFireAuth} from 'angularfire2/auth';
-import { HomePage } from '../home/home';
-import { Injectable } from '@angular/core';
 import { ExpenseListProvider } from '../../providers/expense-list/expense-list';
 import { ExpenseListPage } from '../expense-list/expense-list';
+import { SigninPage } from '../signin/signin';
+import { Observable } from 'rxjs/Observable';
  
 @Component({
   selector: 'page-expenses',
   templateUrl: 'expenses.html',
 })
 export class ExpensesPage {
- expenseItem = {} as ExpenseItem;
- userId: string;
+  expenseItem = {} as ExpenseItem;
+  userId: string;
+  userExpensesRef: AngularFireList<any>;
+  userExpenses: Observable<any[]>;
 
-  constructor( private expense: ExpenseListProvider, private afAuth: AngularFireAuth, public alertCtrl: AlertController,private database: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams) {
+  constructor( private afAuth: AngularFireAuth, 
+    public alertCtrl: AlertController,
+    private expenseProvider:ExpenseListProvider,
+    public navCtrl: NavController) {
+
+      afAuth.authState.subscribe(user => {
+        if (!user) {
+          this.navCtrl.push(SigninPage)
+        }
+        this.userId = user.uid;
+      });
     
   }
   public event = {
@@ -31,25 +43,21 @@ export class ExpensesPage {
     this.navCtrl.push(IncomePage);
   }
 
-
-/*saveExpense()
-{
-  this.afAuth.authState.take(1000).subscribe(auth => {
-    this.database.object(`expense-item/${auth.uid}`).set(this.expenseItem).then(() => this.navCtrl.pop())
-  })
-}*/
-    addExpenseItem(expenseItem:ExpenseItem)  {
-     // expenseItem.userId=this.userId
-      this.expense.addExpenseItem(expenseItem)
-      //.then(()=> this.navCtrl.pop())
-      this.expenseItem = {} as ExpenseItem;
-      let alert = this.alertCtrl.create({
-        title: 'Expense Added!',
-        buttons: ['OK']
-        });
-        alert.present();
-        this.navCtrl.push(ExpenseListPage);
-    }
+  addExpenseItem(expenseItem:ExpenseItem) {
+    expenseItem.userId=this.userId;
+    console.log(this.expenseItem);
+    this.expenseProvider.addExpenseItem(expenseItem);
+    // this.expense.addExpenseItem(expenseItem)
+    //   //.then(()=> this.navCtrl.pop())
+  //     // this.expenseItem = {} as ExpenseItem;
+    let alert = this.alertCtrl.create({
+      title: 'Expense Added!',
+      buttons: ['OK']
+    });
+    alert.present();
+    this.navCtrl.pop();
+    this.navCtrl.push(ExpenseListPage);
+  }
           
 }
 
