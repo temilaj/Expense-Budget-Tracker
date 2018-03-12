@@ -1,25 +1,23 @@
-
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>income-list</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>income-list</ion-title>
+    </ion-navbar>
 
 </ion-header>
 <ion-content padding>
-    <ion-item-sliding *ngFor="let incomeItem of incom" #slidingitem>
+    <ion-item-sliding *ngFor="let incomeItem of userIncome | async" #slidingitem>
         <ion-item>
-            <h2>Name:{{incomeItem.incomeName}} </h2>
-            <h2>Amount:{{incomeItem.incomeAmount}}</h2>
-            <h3>Date: {{incomeItem.incomeDate}}</h3>
-            <h3>Category: {{incomeItem.incomeCategory}}</h3>
-            <h3>Notes: {{incomeItem.incomeNotes}}</h3>
-            </ion-item>
-      <ion-item-options side="right" (ionSwipe)="deleteIn(incomeItem.key)">
-          <button ion-button  (click)="updateIn(incomeItem.key, incomeItem.incomeNotes)"> Update</button>
-          <ion-icon name="archive"></ion-icon>
-          <button ion-button  (click)="deleteIn(incomeItem.key)"> Delete</button>
-      </ion-item-options>
-     
+            <h2>Name:{{incomeItem.name}} </h2>
+            <h2>&#8358; {{incomeItem.amount}}</h2>
+            <ion-note item-end>{{incomeItem.date}}</ion-note>
+            <h3>Category: {{incomeItem.category}}</h3>
+            <h3>Notes: {{incomeItem.notes}}</h3>
+        </ion-item>
+        <!-- <ion-item-options side="right" (ionSwipe)="deleteIn(incomeItem.key)">
+            <button ion-button (click)="updateIn(incomeItem.key, incomeItem.incomeNotes)"> Update</button>
+            <ion-icon name="archive"></ion-icon>
+            <button ion-button (click)="deleteIn(incomeItem.key)"> Delete</button>
+        </ion-item-options> -->
     </ion-item-sliding>
 </ion-content>
