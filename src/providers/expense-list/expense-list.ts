@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ExpenseItem } from '../../models/expense-item/expense-item.interface';
 import firebase from 'firebase';
@@ -8,59 +8,21 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ExpenseListProvider {
-  //expenseItem = {} as ExpenseItem;
-  expenseItem$: Observable<any[]>
-  userId: string;
+  userExpenses: AngularFireList<{}>;
 
-  fireusers = firebase.database().ref('/expense-list');
-  constructor( private database: AngularFireDatabase, private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(user => {
-      if(user) this.userId = user.uid
-    })
-   
+  constructor( private database: AngularFireDatabase) {
   }
   
-  getuserexpenses() {
-    var promise = new Promise((resolve, reject) => {
-    this.fireusers.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
-      let items = [];
-      snapshot.forEach((snap) => {
-          items.push({
-             key: snap.key,
-             expenseAmount: snap.val().expenseAmount,
-             expenseCategory: snap.val().expenseCategory,
-             expenseDate:snap.val().expenseDate,
-             expenseName:snap.val().expenseName,
-             expenseNotes: snap.val().expenseNotes
-          });
-          return false;
-      });
-      console.log(items);
-      resolve(items);
-    }).catch((err) => {
-      reject(err);
-      })
-    })
-    return promise;
+  getAllUserExpenses(userId: string){
+    return this.userExpenses = this.database.list('/expenses', ref => ref.orderByChild('userId').equalTo(userId));
   }
-
+  deleteExpense(expenseId: string) {
+    return this.database.list('/expenses').remove(expenseId);
+  }
+  
   addExpenseItem(expenseItem:ExpenseItem){
-    this.database.list(`expense-list/${this.userId}`).push(expenseItem);
-  }
-  
-  updateEx(key,newValue): void {
-    this.database.object(`/expense-list/${this.userId}/` + key)
-      .update({ expenseName: newValue, 
-               // expenseAmount:newValue,
-               // expenseNotes:newValue,
-              },
-             );    
+    return this.database.list('expenses').push(expenseItem);
   }
 
-  deleteEx(exp): void {
-    this.database.object(`/expense-list/${this.userId}/` + exp).remove();
-  }
-  getAmount():void{
-    
-  }
+
 }
