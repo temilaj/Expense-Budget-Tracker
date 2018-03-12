@@ -4,23 +4,28 @@ import { ExpensesPage } from '../expenses/expenses';
 import { IncomeItem } from '../../models/income-item/income-item.interface';
 import { NgModel } from '@angular/forms';
 import { AlertController } from 'ionic-angular';
-import{AngularFireAuth} from 'angularfire2/auth';
-import{AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import{ AngularFireAuth } from 'angularfire2/auth';
 import { IncomeListProvider, } from '../../providers/income-list/income-list';
 import { IncomeListPage } from '../income-list/income-list';
+import { SigninPage } from '../signin/signin';
 
 @Component({
   selector: 'page-income',
   templateUrl: 'income.html',
 })
 export class IncomePage {
+  userId: string;
   incomeItem = {} as IncomeItem;
-  //incomeItemRef$: FirebaseListObservable<IncomeItem[]>;
 
-  constructor( private income:IncomeListProvider, private afAuth: AngularFireAuth,public alertCtrl: AlertController,private database: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
-  
- // this.incomeItemRef$= this.database.list("income-item");
-}
+  constructor( private incomeProvider:IncomeListProvider, private afAuth: AngularFireAuth,
+    public alertCtrl: AlertController, public navCtrl: NavController) {
+      afAuth.authState.subscribe(user => {
+        if (!user) {
+          this.navCtrl.push(SigninPage)
+        }
+        this.userId = user.uid;
+      });
+  }
   public event = {
     month: '2018-02-19',
     timeStarts: '07:43',
@@ -29,37 +34,18 @@ export class IncomePage {
   goto_expense(){
     this.navCtrl.push(ExpensesPage);
   }
- /* saveIncome(incomeItem: IncomeItem){
-    //console.log(expenseItem);
-    //pushing items into expense node 
-    this.incomeItemRef$.push({
-      incomeName: this.incomeItem.incomeName,
-      incomeAmount: this.incomeItem.incomeAmount,
-      incomeDate: this.incomeItem.incomeDate,
-      incomeCategory: this.incomeItem.incomeCategory,
-      incomeNotes: this.incomeItem.incomeNotes,
-    });
-    this.incomeItem = {} as IncomeItem;
-    
+ 
+ addIncome(incomeItem:IncomeItem){
+  incomeItem.userId = this.userId;
+  console.log(incomeItem);
+  this.incomeProvider.addIncome(incomeItem).then(() => {
     let alert = this.alertCtrl.create({
       title: 'Income Added!',
       buttons: ['OK']
-      });
-      alert.present();
-      this.navCtrl.pop();
-}*/
- //createIncome(incomeItem:IncomeItem){
-//   this.income.createIncome(incomeItem);
-
- //}
- createIncome(incomeItem:IncomeItem){
-   this.income.addIncomeItem(incomeItem);
-   this.incomeItem = {} as IncomeItem;
-      let alert = this.alertCtrl.create({
-        title: 'Income Added!',
-        buttons: ['OK']
-        });
-        alert.present();
-        this.navCtrl.push(IncomeListPage);
+    });
+    alert.present();
+  }).then(() => {
+    this.navCtrl.push(IncomeListPage);
+  });
  }
 }
