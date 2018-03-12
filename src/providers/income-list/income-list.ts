@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import {IncomeItem} from '../../models/income-item/income-item.interface';
 import{Observable} from 'rxjs/Observable';
 

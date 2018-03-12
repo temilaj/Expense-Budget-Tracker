@@ -5,7 +5,8 @@ import{Observable} from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 //import { ItemSliding } from 'ionic-angular';
 import { Slide } from 'ionic-angular/components/slides/slide';
-import{AngularFireDatabase, AngularFireAction, AngularFireList } from 'angularfire2/database';
+import{AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { SigninPage } from '../signin/signin';
 
 
 
@@ -23,6 +24,12 @@ export class IncomeListPage {
     public loadingCtrl: LoadingController,
     private afAuth:AngularFireAuth, private incomeProvider:IncomeListProvider,
     public navCtrl: NavController, public navParams: NavParams) {
+      afAuth.authState.subscribe(user => {
+        if (!user) {
+          this.navCtrl.push(SigninPage)
+        }
+        this.userId = user.uid;
+      });
   }
 
   ionViewDidLoad() {
