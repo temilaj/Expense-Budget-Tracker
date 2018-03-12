@@ -13,12 +13,16 @@ export class IncomeListProvider {
   }
   
   getAllUserIncome(userId: string){
-    return this.UserIncome = this.database.list('/incomes');
-    // return this.UserIncome = this.database.list('/incomes', ref => ref.orderByChild('userId').equalTo(userId));
+    return this.UserIncome = this.database.list('/incomes', ref => ref.orderByChild('userId').equalTo(userId));
   }
   addIncome(incomeItem: IncomeItem){
-    return this.database.list('incomes').push(incomeItem);
+    return this.database.list('/incomes').push(incomeItem);
   }
-
+  deleteincome(incomeId: string) {
+    return this.database.list('/incomes').remove(incomeId);
+  }
+  updateincome(incomeItemId, incomeItem) {
+    return this.database.list('/incomes').update(incomeItemId, { incomeItem });
+  }
 
 }
