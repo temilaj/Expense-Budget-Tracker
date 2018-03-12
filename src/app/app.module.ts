@@ -22,7 +22,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireAuthModule, AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabaseModule} from 'angularfire2/database-deprecated';
+
 //import * as firebase from "firebase";
 import firebase from 'firebase';
 import { AuthProvider } from '../providers/auth/auth';
@@ -37,6 +37,7 @@ import { TransactionsProvider } from '../providers/transactions/transactions';
 import { ExpenseListPage } from '../pages/expense-list/expense-list';
 import { IncomeListPage } from '../pages/income-list/income-list';
 import { SavingsProvider } from '../providers/savings/savings';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 @NgModule({
   declarations: [
@@ -55,11 +56,6 @@ import { SavingsProvider } from '../providers/savings/savings';
     ForgotPasswordPage,
     ExpenseListPage,
     IncomeListPage
-    
-
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -68,9 +64,7 @@ import { SavingsProvider } from '../providers/savings/savings';
    AngularFireModule.initializeApp(FIREBASE_CONFIG),
     //firebase.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
-    
-    
+    AngularFireDatabaseModule,    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
