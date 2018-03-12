@@ -2,7 +2,7 @@ export interface ExpenseItem{
    userId:string;
    name: string;
    amount: number;
-   Date: Date;
+   date: Date;
    category: string;
    notes: string;
 }

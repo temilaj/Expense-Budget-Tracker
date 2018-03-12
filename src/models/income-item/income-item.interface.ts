@@ -1,7 +1,8 @@
 export interface IncomeItem{
-    incomeName: string;
-    incomeAmount: number;
-    incomeDate: string;
-    incomeCategory: string;
-    incomeNotes: string;
+    userId:string;
+    name: string;
+    amount: number;
+    date: Date;
+    category: string;
+    notes: string;
  }
