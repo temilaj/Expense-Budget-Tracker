@@ -4,54 +4,63 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
-      <button ion-button (click) ="gotoSettings()" icon only>
-        <ion-icon name= "settings"></ion-icon>
+      <button ion-button (click)="gotoSettings()" icon only>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
- <ion-content padding class ="color">
- <ion-grid>
-   <ion-row>
-     <ion-col>
-       <ion-card class="background" style="color:white">
-         <ion-card-header></ion-card-header>
-         <ion-card-content>
-          Main Balance
-          <!--<p>A: {{a | currency:'CAD'}}</p>-->
-         <!-- <p>{{1337.1337 | currency:'EUR':true:'1.2-2'}}</p>-->
-         </ion-card-content>
-       </ion-card>
-     </ion-col>
-   </ion-row>
-   <ion-row>
-     <ion-col>
-    <ion-card><!--(click) ="toggle_expenses()">-->
-        <ion-card-header ion-text color = "#009688">
-        <div id="pics">Expenses</div> <ion-icon name="remove-circle"></ion-icon>
-        <ion-fab small right>
-          <button class="fab-sub" ion-fab  (click)="toggle_expenses()"> <ion-icon name="add" style="color:white" ></ion-icon></button>
-        </ion-fab>
-      </ion-card-header>
-       </ion-card>
-     </ion-col>
-   </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-card> <!--(click) ="toggle_income()">-->
-          <ion-card-header ion-text color = "#009688">
-          <div id="pics">Income</div> <ion-icon name="add-circle"></ion-icon>
-          <ion-fab small right>
-              <button class="fab-add" ion-fab  (click)="toggle_income()"> <ion-icon name="remove" style="color:white" ></ion-icon></button>
+<ion-content padding class="color">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card class="background" style="color:white">
+          <ion-card-header></ion-card-header>
+          <ion-card-content>
+            Main Balance
+            <p class="text--light">A: {{ totalUserIncome - totalUserExpenses | currency:'CAD'}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <!--(click) ="toggle_expenses()">-->
+          <ion-card-header ion-text color="#009688">
+            <div id="pics">Expenses</div>
+            <p> {{totalUserExpenses | currency:'NGN'}}</p>
+            <ion-icon name="remove-circle"></ion-icon>
+            <ion-fab small right>
+              <button class="fab-sub" ion-fab (click)="toggle_expenses()">
+                <ion-icon name="add" style="color:white"></ion-icon>
+              </button>
             </ion-fab>
-        </ion-card-header>
-         </ion-card>
-       </ion-col>
-  </ion-row>
-   <button  style="color:#002A4D"  round outline ion-button block>Set Spending Limit</button>
-   <button (click) = "savings()" style="color:#002A4D" outline round  ion-button block>Add Savings now</button>
-  
- 
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <!--(click) ="toggle_income()">-->
+          <ion-card-header ion-text color="#009688">
+            <div id="pics">Income</div>
+            <p>&#8358; {{ totalUserIncome }}</p>
+            <ion-icon name="add-circle"></ion-icon>
+            <ion-fab small right>
+              <button class="fab-add" ion-fab (click)="toggle_income()">
+                <ion-icon name="remove" style="color:white"></ion-icon>
+              </button>
+            </ion-fab>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <button style="color:#002A4D" round outline ion-button block>Set Spending Limit</button>
+    <button (click)="savings()" style="color:#002A4D" outline round ion-button block>Add Savings now</button>
+
+
   </ion-grid>
   <!--<button   (click) = "gotoExpenseList()"style="color:#002A4D"  round outline ion-button block> ExpenseList</button>
   <button   (click) = "gotoIncomeList()"style="color:#002A4D"  round outline ion-button block>IncomeList</button>-->
