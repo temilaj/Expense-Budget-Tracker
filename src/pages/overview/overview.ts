@@ -27,6 +27,7 @@ export class OverviewPage {
   transportExpenses: number;
   clothingExpenses: number;
   utilityExpenses: number;
+  otherExpenses: number;
   isDataAvailable: boolean = false;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
@@ -39,7 +40,7 @@ export class OverviewPage {
         this.userId = user.uid;
       });
   }
-  doughnutChartLabels:string[] = ['Food', 'Entertainent', 'transport', 'utilities', 'education', 'clothes'];
+  doughnutChartLabels:string[] = ['Food', 'Entertainent', 'transport', 'utilities', 'education', 'clothes', 'other'];
   doughnutChartData:number[];
   doughnutChartType:string = 'doughnut';
 
@@ -51,6 +52,7 @@ export class OverviewPage {
     this.clothingExpenses = 0;
     this.utilityExpenses = 0;
     this.foodExpenses = 0;
+    this.otherExpenses = 0;
     
     const loader = this.loadingCtrl.create({
       content: "loading your personal finances",
@@ -89,6 +91,8 @@ export class OverviewPage {
               this.doughnutChartData[5] = this.clothingExpenses;
               break;
             default:
+              this.otherExpenses += Number(expense.amount)
+              this.doughnutChartData[6] = this.otherExpenses;
               break;
           }
         });

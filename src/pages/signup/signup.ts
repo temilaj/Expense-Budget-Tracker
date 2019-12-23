@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
 import { HomePage } from '../home/home';
+import { SigninPage } from '../signin/signin';
 
 @IonicPage()
 @Component({
@@ -58,5 +59,11 @@ export class SignupPage {
       this.loading.present();
     }
   }
+
+  //navigate to signin page
+  goToSignin(): void { 
+    this.navCtrl.push(SigninPage); 
   }
+  
+}
 
